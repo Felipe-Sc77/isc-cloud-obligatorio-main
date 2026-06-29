@@ -47,3 +47,18 @@ output "db_name" {
   description = "Nombre de la base de datos."
   value       = module.database.db_name
 }
+
+output "alb_unhealthy_hosts_alarm_name" {
+  description = "Nombre de la alarma de targets no saludables del ALB."
+  value       = module.monitoring.alb_unhealthy_hosts_alarm_name
+}
+
+output "asg_cpu_alarm_name" {
+  description = "Nombre de la alarma de CPU alta del ASG/EC2."
+  value       = module.monitoring.asg_cpu_alarm_name
+}
+
+output "rds_cpu_alarm_name" {
+  description = "Nombre de la alarma de CPU alta de RDS."
+  value       = module.monitoring.rds_cpu_alarm_name
+}

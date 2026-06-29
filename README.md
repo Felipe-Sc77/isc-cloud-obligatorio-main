@@ -12,15 +12,14 @@ RDS.
 
 ## 2. Arquitectura implementada
 
-La arquitectura queda dividida en cuatro partes:
+La arquitectura queda dividida en cinco partes:
 
 - Red base con VPC, subnets publicas, subnets privadas de aplicacion y subnets
   privadas de base de datos.
 - ALB publico para recibir trafico HTTP.
 - Auto Scaling Group con instancias EC2 en subnets privadas de aplicacion.
 - RDS MySQL en subnets privadas de base de datos.
-
-El modulo de monitoring queda pendiente para una fase posterior.
+- Monitoreo basico con alarmas de CloudWatch.
 
 ## 3. Servicios AWS utilizados
 
@@ -36,6 +35,7 @@ El modulo de monitoring queda pendiente para una fase posterior.
 - Auto Scaling Group
 - EC2
 - RDS MySQL
+- CloudWatch
 
 ## 4. Modulos usados y repositorios
 
@@ -45,6 +45,7 @@ Los modulos se consumen desde GitHub usando tags:
 - `terraform-aws-alb-module`: `ref=v0.1.0`
 - `terraform-aws-asg-module`: `ref=v0.1.0`
 - `terraform-aws-rds-module`: `ref=v0.1.0`
+- `terraform-aws-monitoring-module`: `ref=v0.1.0`
 
 Repositorios:
 
@@ -52,6 +53,7 @@ Repositorios:
 - `https://github.com/Felipe-Sc77/terraform-aws-alb-module`
 - `https://github.com/Felipe-Sc77/terraform-aws-asg-module`
 - `https://github.com/Felipe-Sc77/terraform-aws-rds-module`
+- `https://github.com/Felipe-Sc77/terraform-aws-monitoring-module`
 
 ## 5. Estructura de red
 
@@ -96,6 +98,17 @@ La base de datos usa RDS MySQL. Los backups se controlan con
 Para simplificar el entorno academico, el ejemplo usa
 `db_skip_final_snapshot = true`. En un entorno real convendria revisar esa
 decision antes de destruir la base de datos.
+
+## 9.1 Monitoreo basico
+
+El modulo de monitoring crea alarmas de CloudWatch para:
+
+- Targets no saludables en el Target Group del ALB.
+- CPU alta en la capa de aplicacion administrada por el ASG.
+- CPU alta en RDS.
+
+En esta version no se crean SNS, dashboards, logs ni IAM. Las alarmas quedan
+definidas para evidenciar monitoreo basico de la arquitectura.
 
 ## 10. Requisitos para ejecutar
 
@@ -153,6 +166,7 @@ El repositorio expone:
 - Target Group ARN.
 - Nombre del ASG.
 - Endpoint y datos basicos de RDS.
+- Nombres de las alarmas de CloudWatch.
 
 No se expone `db_password`.
 
@@ -170,9 +184,9 @@ No se expone `db_password`.
 - No se usa modulo separado de Security Groups.
 - No se usa HTTPS todavia para evitar certificados ACM en esta primera version.
 - No se usa Secrets Manager todavia para mantener el alcance simple.
-- No se integra monitoring en esta fase.
+- El monitoreo inicial usa alarmas simples de CloudWatch, sin SNS ni dashboards.
 
 ## 17. Estado del proyecto
 
-Estado actual: integracion inicial de VPC, ALB, ASG y RDS desde modulos remotos
-versionados con `ref=v0.1.0`.
+Estado actual: integracion de VPC, ALB, ASG, RDS y monitoreo basico desde
+modulos remotos versionados con `ref=v0.1.0`.

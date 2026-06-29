@@ -79,3 +79,21 @@ module "database" {
 
   common_tags = var.common_tags
 }
+
+module "monitoring" {
+  source = "git::https://github.com/Felipe-Sc77/terraform-aws-monitoring-module.git?ref=v0.1.0"
+
+  project_name = var.project_name
+  environment  = var.environment
+
+  alb_arn_suffix          = module.alb.alb_arn_suffix
+  target_group_arn_suffix = module.alb.target_group_arn_suffix
+  asg_name                = module.app.asg_name
+  db_instance_id          = module.database.db_instance_id
+
+  cpu_threshold             = var.monitoring_cpu_threshold
+  rds_cpu_threshold         = var.monitoring_rds_cpu_threshold
+  unhealthy_hosts_threshold = var.monitoring_unhealthy_hosts_threshold
+
+  common_tags = var.common_tags
+}

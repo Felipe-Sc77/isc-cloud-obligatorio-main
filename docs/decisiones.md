@@ -14,8 +14,7 @@ Modulos integrados en esta fase:
 - `terraform-aws-alb-module` con `ref=v0.1.0`
 - `terraform-aws-asg-module` con `ref=v0.1.0`
 - `terraform-aws-rds-module` con `ref=v0.1.0`
-
-El modulo `terraform-aws-monitoring-module` queda diferido.
+- `terraform-aws-monitoring-module` con `ref=v0.1.0`
 
 ## Security Groups
 
@@ -34,8 +33,17 @@ Decision: no guardar credenciales en Terraform ni en Git.
 - `terraform.tfvars.example` queda versionado solo como ejemplo.
 - `.terraform.lock.hcl` se puede versionar porque no contiene secretos y fija la version del provider.
 
+## Monitoreo
+
+Decision: integrar monitoreo basico con CloudWatch sin notificaciones todavia.
+
+- Se crea una alarma de targets no saludables para el Target Group del ALB.
+- Se crea una alarma de CPU alta para la capa ASG/EC2.
+- Se crea una alarma de CPU alta para RDS.
+- No se crean SNS, dashboards, logs ni IAM en esta fase.
+
 ## Alcance actual
 
-Decision: no integrar monitoring, HTTPS, IAM ni Secrets Manager en esta fase.
+Decision: no integrar HTTPS, IAM, Secrets Manager ni notificaciones SNS en esta fase.
 
 La prioridad es una version simple y defendible para el obligatorio.
