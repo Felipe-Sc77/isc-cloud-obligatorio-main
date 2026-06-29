@@ -1,32 +1,41 @@
 # Decisiones
 
-## Estructura modular inicial
+Este archivo lista decisiones de apoyo. La explicacion principal esta en
+`README.md`.
 
-Decision: usar un repositorio principal y cinco repositorios de modulos Terraform propios.
+## Repositorios y modulos
 
-Repositorios:
+Decision: usar un repositorio principal y repositorios separados para modulos
+Terraform propios.
 
-- `isc-cloud-obligatorio-main`
-- `terraform-aws-vpc-module`
-- `terraform-aws-alb-module`
-- `terraform-aws-asg-module`
-- `terraform-aws-rds-module`
-- `terraform-aws-monitoring-module`
+Modulos integrados en esta fase:
+
+- `terraform-aws-vpc-module` con `ref=v0.1.0`
+- `terraform-aws-alb-module` con `ref=v0.1.0`
+- `terraform-aws-asg-module` con `ref=v0.1.0`
+- `terraform-aws-rds-module` con `ref=v0.1.0`
+
+El modulo `terraform-aws-monitoring-module` queda diferido.
 
 ## Security Groups
 
 Decision: no crear modulo separado de Security Groups.
 
-Reglas:
+- El modulo ALB crea el Security Group del ALB.
+- El modulo ASG crea el Security Group de la aplicacion y recibe `alb_sg_id`.
+- El modulo RDS crea el Security Group de la base de datos y recibe `app_sg_id`.
 
-- `alb-module` crea el Security Group del ALB.
-- `asg-module` crea el Security Group de EC2/app y recibe `alb_sg_id`.
-- `rds-module` crea el Security Group de RDS y recibe `app_sg_id`.
-- `monitoring-module` no crea Security Groups.
+## Credenciales y archivos locales
 
-## Modulos diferidos
+Decision: no guardar credenciales en Terraform ni en Git.
 
-Decision: no agregar por ahora modulos extra de security, storage, notification ni IAM.
+- Las credenciales AWS Academy se configuran por variables de entorno.
+- `terraform.tfvars` es local y esta ignorado.
+- `terraform.tfvars.example` queda versionado solo como ejemplo.
+- `.terraform.lock.hcl` se puede versionar porque no contiene secretos y fija la version del provider.
 
-Primero se construira una version funcional minima. Luego se evaluaran mejoras.
+## Alcance actual
 
+Decision: no integrar monitoring, HTTPS, IAM ni Secrets Manager en esta fase.
+
+La prioridad es una version simple y defendible para el obligatorio.

@@ -1,27 +1,25 @@
 # Arquitectura
 
-Estado actual: propuesta modular validada, sin implementacion Terraform.
+Este archivo resume la arquitectura. La documentacion principal esta en
+`README.md`.
 
-## Componentes previstos
+## Componentes integrados
 
-- VPC
-- Subnets publicas
-- Subnets privadas
-- Internet Gateway
-- NAT Gateway
-- Route Tables
-- Security Groups
-- Application Load Balancer
-- Auto Scaling Group
-- EC2
-- RDS Multi-AZ
-- CloudWatch
+- VPC con subnets publicas, subnets privadas de aplicacion y subnets privadas de base de datos.
+- Internet Gateway y NAT Gateway para salida desde la capa de aplicacion.
+- Application Load Balancer publico.
+- Auto Scaling Group con instancias EC2 en subnets privadas de aplicacion.
+- RDS MySQL en subnets privadas de base de datos.
 
 ## Flujo de alto nivel
 
-1. El trafico publico ingresara por el Application Load Balancer.
-2. El ALB enviara trafico a instancias EC2 administradas por un Auto Scaling Group.
-3. Las instancias de aplicacion se ubicaran en subnets privadas.
-4. RDS Multi-AZ se ubicara en subnets privadas.
-5. CloudWatch monitoreara componentes definidos.
+1. El trafico HTTP publico ingresa por el ALB.
+2. El ALB envia trafico al Target Group.
+3. El ASG registra instancias EC2 en ese Target Group.
+4. Las instancias de aplicacion se conectan a RDS usando el Security Group de aplicacion.
+5. RDS permanece en subnets privadas de base de datos y no es publico.
 
+## Pendiente
+
+- Integrar modulo de monitoring.
+- Preparar diagrama final con iconografia de AWS.
