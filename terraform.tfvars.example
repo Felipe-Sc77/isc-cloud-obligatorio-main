@@ -1,3 +1,53 @@
-# Ejemplo de variables para despliegue.
-# Completar cuando se validen region, CIDRs, tamanos y nombres.
+aws_region   = "us-east-1"
+project_name = "isc-cloud"
+environment  = "dev"
 
+vpc_cidr = "10.0.0.0/16"
+
+availability_zones = [
+  "us-east-1a",
+  "us-east-1b"
+]
+
+public_subnet_cidrs = [
+  "10.0.1.0/24",
+  "10.0.2.0/24"
+]
+
+private_app_subnet_cidrs = [
+  "10.0.11.0/24",
+  "10.0.12.0/24"
+]
+
+private_db_subnet_cidrs = [
+  "10.0.21.0/24",
+  "10.0.22.0/24"
+]
+
+enable_nat_gateway = true
+
+ami_id                 = "ami-xxxxxxxxxxxxxxxxx"
+instance_type          = "t2.micro"
+app_port               = 80
+asg_min_size           = 2
+asg_desired_capacity   = 2
+asg_max_size           = 4
+
+db_name                      = "appdb"
+db_username                  = "admin"
+db_password                  = "CAMBIAR_ESTE_VALOR_NO_ES_REAL"
+db_port                      = 3306
+db_engine                    = "mysql"
+db_engine_version            = "8.0"
+db_instance_class            = "db.t3.micro"
+db_allocated_storage         = 20
+db_multi_az                  = true
+db_backup_retention_period   = 7
+db_skip_final_snapshot       = true
+db_deletion_protection       = false
+
+common_tags = {
+  Project     = "isc-cloud"
+  Environment = "dev"
+  Course      = "Implementacion de Soluciones Cloud"
+}

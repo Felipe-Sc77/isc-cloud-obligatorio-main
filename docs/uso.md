@@ -1,19 +1,31 @@
 # Uso
 
-Estado actual: estructura inicial sin implementacion.
+La guia principal de uso esta en `README.md`. Este archivo resume el flujo de
+trabajo.
 
-## Flujo esperado
+## Preparacion
 
-1. Validar contratos de variables y outputs de cada modulo.
-2. Publicar tags de version en cada repositorio de modulo.
-3. Consumir los modulos desde este repositorio principal usando `source` con GitHub y `ref`.
-4. Ejecutar validaciones Terraform cuando exista implementacion.
+1. Instalar Terraform.
+2. Configurar credenciales temporales de AWS Academy como variables de entorno.
+3. Copiar `terraform.tfvars.example` a `terraform.tfvars`.
+4. Completar `terraform.tfvars` con valores reales del despliegue.
+
+`terraform.tfvars` no se sube a GitHub.
+
+## Comandos
+
+```powershell
+terraform init
+terraform validate
+terraform plan -var-file="terraform.tfvars"
+terraform apply -var-file="terraform.tfvars"
+```
+
+En esta fase se validan `init` y `validate`. `plan` y `apply` quedan para cuando
+la configuracion sea revisada.
 
 ## Pendiente
 
-- Definir region.
-- Definir CIDRs.
-- Definir tamanos de instancia.
-- Definir estrategia de credenciales.
-- Definir backend de estado, si aplica.
-
+- Elegir AMI real para la region.
+- Revisar valores reales de CIDR y tamanos.
+- Integrar monitoring en una fase posterior.
