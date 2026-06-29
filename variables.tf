@@ -149,6 +149,24 @@ variable "db_deletion_protection" {
   default     = false
 }
 
+variable "monitoring_cpu_threshold" {
+  description = "Umbral de CPU para la alarma del ASG/EC2."
+  type        = number
+  default     = 70
+}
+
+variable "monitoring_rds_cpu_threshold" {
+  description = "Umbral de CPU para la alarma de RDS."
+  type        = number
+  default     = 70
+}
+
+variable "monitoring_unhealthy_hosts_threshold" {
+  description = "Cantidad de targets no saludables que dispara la alarma del ALB."
+  type        = number
+  default     = 1
+}
+
 variable "common_tags" {
   description = "Tags comunes aplicados a los recursos."
   type        = map(string)

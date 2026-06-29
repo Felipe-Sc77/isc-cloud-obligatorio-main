@@ -28,4 +28,4 @@ la configuracion sea revisada.
 
 - Elegir AMI real para la region.
 - Revisar valores reales de CIDR y tamanos.
-- Integrar monitoring en una fase posterior.
+- Revisar si mas adelante se agregan notificaciones SNS para las alarmas.
